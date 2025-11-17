@@ -1,0 +1,99 @@
+.email-item {
+  display: grid;
+  grid-template-columns: 40px 200px 1fr 150px 40px;
+  gap: 15px;
+  align-items: center;
+  padding: 12px 20px;
+  border-bottom: 1px solid #e0e0e0;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.email-item:hover {
+  background-color: #f5f5f5;
+}
+
+.email-item.selected {
+  background-color: #e8f0fe;
+}
+
+.email-item.unread {
+  background-color: #fff;
+  font-weight: 600;
+}
+
+.star-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5f6368;
+  transition: color 0.2s;
+}
+
+.star-btn:hover {
+  color: #f4b400;
+}
+
+.star-btn.starred {
+  color: #f4b400;
+}
+
+.email-sender {
+  font-size: 14px;
+  color: #202124;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.email-subject {
+  font-size: 14px;
+  color: #202124;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.email-preview {
+  font-size: 13px;
+  color: #5f6368;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.email-date {
+  font-size: 12px;
+  color: #5f6368;
+  text-align: right;
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #5f6368;
+  transition: color 0.2s;
+}
+
+.delete-btn:hover {
+  color: #d93025;
+}
+
+@media (max-width: 768px) {
+  .email-item {
+    grid-template-columns: 40px 1fr 80px 40px;
+  }
+  
+  .email-preview {
+    display: none;
+  }
+}
