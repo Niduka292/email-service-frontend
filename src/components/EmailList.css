@@ -1,0 +1,15 @@
+.email-list {
+  flex: 1;
+  overflow-y: auto;
+  background-color: #fff;
+}
+
+.email-list-loading,
+.email-list-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300px;
+  color: #5f6368;
+  font-size: 14px;
+}

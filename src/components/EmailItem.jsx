@@ -1,4 +1,6 @@
 import { format } from "date-fns";
+import {Star, Trash2} from 'lucide-react';
+import './EmailItem.css';
 
 const EmialItem = ({email, onSelect, onStar, onDelete, isSelected}) => {
     const formatDate = (dateString) => {
