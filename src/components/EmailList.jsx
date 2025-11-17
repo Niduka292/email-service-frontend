@@ -41,3 +41,5 @@ const EmailList = ({emails, onSelectEmail, onStarEmail, onDeleteEmail, loading})
         </div>
     );
 }
+
+export default EmailList;

@@ -1,0 +1,55 @@
+.inbox-page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.inbox-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dadce0;
+}
+
+.inbox-header h1 {
+  font-size: 20px;
+  font-weight: 500;
+  color: #202124;
+}
+
+.inbox-content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.email-list-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid #dadce0;
+}
+
+.email-viewer-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .inbox-content {
+    flex-direction: column;
+  }
+  
+  .email-viewer-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    background-color: #fff;
+  }
+}

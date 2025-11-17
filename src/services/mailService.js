@@ -43,7 +43,7 @@ const mailService = {
     },
 
     // Delete mail
-    deleteMMail: async (mailId, userId) => {
+    deleteMail: async (mailId, userId) => {
         try{
             const response = await api.delete(`/mails/${mailId}/user/${userId}`);
             return response.data;
