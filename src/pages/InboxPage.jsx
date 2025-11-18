@@ -3,7 +3,9 @@ import { useAuth } from "../context/AuthContext"
 import mailService from "../services/mailService";
 import EmailList from '../components/EmailList';
 import EmailViewer from '../components/EmailViewer';
+import ComposeModal from '../components/ComposeModal';
 import toast from "react-hot-toast";
+import { Plus } from 'lucide-react';
 import './InboxPage.css';
 
 const InboxPage = () => {
@@ -11,6 +13,8 @@ const InboxPage = () => {
     const [emails, setEmails] = useState([]);
     const [selectedEmail, setSelectedEmail] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isComposeOpen, setIsComposeOpen] = useState(false);
+    const [replyTo, setReplyTo] = useState(null);
 
     useEffect(() => {
         fetchInbox();
@@ -82,16 +86,48 @@ const InboxPage = () => {
     };
 
     const handleReply = (email) => {
-        // TODO: Open compose modal with reply context
-    }
+        setReplyTo(email);
+        setIsComposeOpen(true);
+    };
+
+    const handleCompose = () => {
+        setReplyTo(null);
+        setIsComposeOpen(true);
+    };
+
+    const handleSendEmail = async (mailData) => {
+        try{
+            await mailService.sendMail(user.userId, {
+                recipientEmail: mailData.to,
+                subject: mailData.subject,
+                body: mailData.body,
+            });
+
+            toast.success('Email sent successfully!');
+            setIsComposeOpen(false);
+            setReplyTo(null);
+        }catch(error){
+            toast.error('Failed to swnd email');
+            throw error;
+        }
+    };
+
+    const handleCloseCompose = () => {
+        setIsComposeOpen(false);
+        setReplyTo(null);
+    };
 
     return (
         <div className="inbox-page">
             <div className="inbox-header">
                 <h1>Inbox</h1>
-                <div>
+                <div className="inbox-header-actions">
+                <button className="compose-btn" onClick={handleCompose}>
+                    <Plus size={20} />
+                    Compose
+                </button>
                 <span>Welcome, {user?.username}</span>
-                <button onClick={logout} style={{ marginLeft: '15px' }}>Logout</button>
+                <button onClick={logout} className="logout-btn">Logout</button>
                 </div>
             </div>
 
@@ -119,6 +155,14 @@ const InboxPage = () => {
                 </div>
                 )}
             </div>
+
+            {/* Compose Modal */}
+            <ComposeModal
+                isOpen={isComposeOpen}
+                onClose={handleCloseCompose}
+                onSend={handleSendEmail}
+                replyTo={replyTo}
+            />
         </div>
     );
 }
