@@ -2,13 +2,14 @@ import { useState } from "react";
 import { X, Send } from 'lucide-react';
 import './ComposeModal.css';
 
-const ComposeModal = ({isOpen, onClose, onSend, replyTo = null}) => {
-    const [formData, setFormData] = useState({
-        to: replyTo?.sender?.email || '',
-        subject: replyTo ? `Re: ${replyTo.subject}` : '',
-        body: replyTo ? `\n\n--- Original Message ---\nFrom: ${replyTo.sender.firstName} ${replyTo.sender.lastName}
-        \nDate: ${new Date(replyTo.sentAt).toLocaleString()}\n\n ${replyTo.body}`: '',
-    });
+const ComposeModal = ({ isOpen, onClose, onSend, replyTo = null }) => {
+  const [formData, setFormData] = useState({
+    to: replyTo?.senderEmail || replyTo?.sender?.email || '',
+    subject: replyTo ? `Re: ${replyTo.subject}` : '',
+    body: replyTo 
+      ? `\n\n--- Original Message ---\nFrom: ${replyTo.senderName || replyTo.sender?.firstName + ' ' + replyTo.sender?.lastName}\nDate: ${new Date(replyTo.sentAt).toLocaleString()}\n\n${replyTo.content || replyTo.body}` 
+      : '',
+  });
 
     const [loading,setLoading] = useState(false);
     const [errors, setErrors] = useState({});

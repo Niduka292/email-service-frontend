@@ -1,18 +1,44 @@
-import {X, Star, Trash2, Reply } from 'lucide-react';
-import {format} from 'date-fns';
+import { X, Star, Trash2, Reply } from 'lucide-react';
+import { format } from 'date-fns';
 import './EmailViewer.css';
 
 const EmailViewer = ({ email, onClose, onStar, onDelete, onReply }) => {
-  if(!email){
-    return null;
-  } 
+  if (!email) return null;
 
   const formatFullDate = (dateString) => {
-    return format(new Date(dateString), 'PPpp'); // e.g., "Apr 29, 2023 at 3:45 PM"
+    try {
+      return format(new Date(dateString), 'PPpp');
+    } catch (error) {
+      return dateString;
+    }
   };
+
+  // Get sender info - handle both formats
+  const senderName = email.senderName || 
+    (email.sender ? `${email.sender.firstName} ${email.sender.lastName}` : 'Unknown');
+  
+  const senderEmail = email.senderEmail || email.sender?.email || '';
+  
+  // Get sender initials for avatar
+  const getInitials = () => {
+    if (email.senderName) {
+      const parts = email.senderName.split(' ');
+      return parts.length >= 2 
+        ? parts[0].charAt(0) + parts[parts.length - 1].charAt(0)
+        : parts[0].charAt(0);
+    }
+    if (email.sender) {
+      return (email.sender.firstName?.charAt(0) || '') + (email.sender.lastName?.charAt(0) || '');
+    }
+    return 'U';
+  };
+
+  // Get email body - handle both 'content' and 'body' fields
+  const emailBody = email.content || email.body || '';
 
   return (
     <div className="email-viewer">
+      {/* Header */}
       <div className="email-viewer-header">
         <div className="email-viewer-actions">
           <button onClick={() => onStar(email.mailId)} title="Star">
@@ -30,18 +56,20 @@ const EmailViewer = ({ email, onClose, onStar, onDelete, onReply }) => {
         </button>
       </div>
 
+      {/* Subject */}
       <h2 className="email-viewer-subject">{email.subject || '(no subject)'}</h2>
 
+      {/* Sender Info */}
       <div className="email-viewer-sender">
         <div className="sender-avatar">
-          {email.sender?.firstName?.charAt(0)}{email.sender?.lastName?.charAt(0)}
+          {getInitials()}
         </div>
         <div className="sender-info">
           <div className="sender-name">
-            {email.sender?.firstName} {email.sender?.lastName}
+            {senderName}
           </div>
           <div className="sender-email">
-            &lt;{email.sender?.email}&gt;
+            &lt;{senderEmail}&gt;
           </div>
         </div>
         <div className="email-date">
@@ -49,15 +77,19 @@ const EmailViewer = ({ email, onClose, onStar, onDelete, onReply }) => {
         </div>
       </div>
 
-      <div className="email-recipients">
-        <span className="recipients-label">To:</span>
-        <span className="recipients-list">
-          {email.recipients?.map(r => `${r.firstName} ${r.lastName}`).join(', ')}
-        </span>
-      </div>
+      {/* Recipients - Only show if available */}
+      {email.recipients && email.recipients.length > 0 && (
+        <div className="email-recipients">
+          <span className="recipients-label">To:</span>
+          <span className="recipients-list">
+            {email.recipients.map(r => `${r.firstName} ${r.lastName}`).join(', ')}
+          </span>
+        </div>
+      )}
 
+      {/* Body */}
       <div className="email-viewer-body">
-        {email.body}
+        {emailBody}
       </div>
     </div>
   );

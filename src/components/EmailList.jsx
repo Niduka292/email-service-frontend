@@ -1,5 +1,5 @@
 import { useState } from "react"
-import EmialItem from "./EmailItem";
+import EmailItem from "./EmailItem";
 import './EmailList.css'
 
 const EmailList = ({emails, onSelectEmail, onStarEmail, onDeleteEmail, loading}) => {
