@@ -126,18 +126,30 @@ const InboxPage = () => {
 
   const handleSendEmail = async (mailData) => {
     try {
-      await mailService.sendMail(user.userId, {
+        console.log('Received from ComposeModal:', mailData);
+        console.log('  - to:', mailData.to);
+        console.log('  - subject:', mailData.subject);
+        console.log('  - body:', mailData.body);
+        
+        // Map frontend field names to backend field names
+        const payload = {
         recipientEmail: mailData.to,
         subject: mailData.subject,
-        body: mailData.body,
-      });
-      
-      toast.success('Email sent successfully!');
-      setIsComposeOpen(false);
-      setReplyTo(null);
+        content: mailData.body, 
+        };
+        
+        console.log('Sending to backend:', payload);
+        
+        await mailService.sendMail(user.userId, payload);
+        
+        toast.success('Email sent successfully!');
+        setIsComposeOpen(false);
+        setReplyTo(null);
+        
     } catch (error) {
-      toast.error('Failed to send email');
-      throw error;
+        console.error('Send error:', error);
+        toast.error('Failed to send email');
+        throw error;
     }
   };
 

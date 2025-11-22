@@ -6,8 +6,8 @@ const EmailList = ({emails, onSelectEmail, onStarEmail, onDeleteEmail, loading})
     const [selectedEmailId, setSelectedEmailId] = useState(null);
     
     const handleSelect = (e) => {
-        setSelectedEmailId(email.mailId);
-        onSelectEmail(email);
+        setSelectedEmailId(e.mailId);
+        onSelectEmail(e);
     }
 
     if(loading){
