@@ -5,7 +5,7 @@ const authService = {
     // Register user
     signup: async (userData) => {
         try{
-            const response = await api.post('/users.signup', userData);
+            const response = await api.post('/users/signup', userData);
             return response.data;
         }catch(error){
             throw error.response?.data || error.message;

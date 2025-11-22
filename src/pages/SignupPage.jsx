@@ -1,12 +1,12 @@
 import { useState } from "react"
 import { useAuth } from "../context/AuthContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const SignupPage = () => {
     const [formData, setFormData] = useState({
-        firstname: '',
-        lastname: '',
+        firstName: '',
+        lastName: '',
         email: '',
         username: '',
         password: '',
