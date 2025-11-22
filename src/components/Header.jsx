@@ -12,7 +12,7 @@ const Header = ({onMenuToggle}) => {
                 <Menu size={24} />
                 </button>
                 <div className="header-logo">
-                <span className="logo-text">📧 Email App</span>
+                <span className="logo-text">Email App</span>
                 </div>
             </div>
 

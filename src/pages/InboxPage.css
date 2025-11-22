@@ -2,35 +2,43 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  background-color: #fff;
 }
 
-.inbox-header {
+.inbox-main {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.inbox-content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.content-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
-  background-color: #f8f9fa;
+  padding: 16px 20px;
   border-bottom: 1px solid #dadce0;
+  background-color: #f8f9fa;
 }
 
-.inbox-header h1 {
+.folder-title {
   font-size: 20px;
   font-weight: 500;
   color: #202124;
   margin: 0;
 }
 
-.inbox-header-actions {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.compose-btn {
+.compose-fab {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 20px;
+  padding: 12px 24px;
   background-color: #1a73e8;
   color: white;
   border: none;
@@ -42,25 +50,9 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-.compose-btn:hover {
+.compose-fab:hover {
   background-color: #1557b0;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-}
-
-.logout-btn {
-  padding: 8px 16px;
-  background-color: transparent;
-  color: #5f6368;
-  border: 1px solid #dadce0;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.logout-btn:hover {
-  background-color: #f1f3f4;
-  border-color: #5f6368;
 }
 
 .inbox-content {
@@ -74,35 +66,46 @@
   display: flex;
   flex-direction: column;
   border-right: 1px solid #dadce0;
+  overflow: hidden;
 }
 
 .email-viewer-container {
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 @media (max-width: 768px) {
-  .inbox-header-actions span {
+  .compose-fab span {
     display: none;
   }
 
-  .compose-btn {
-    padding: 10px 15px;
-    font-size: 13px;
+  .compose-fab {
+    padding: 12px;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .folder-title {
+    font-size: 18px;
   }
 
   .inbox-content {
     flex-direction: column;
   }
-  
+
   .email-viewer-container {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 100;
+    z-index: 200;
     background-color: #fff;
   }
 }

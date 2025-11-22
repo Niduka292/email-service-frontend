@@ -4,78 +4,89 @@ import mailService from '../services/mailService';
 import EmailList from '../components/EmailList';
 import EmailViewer from '../components/EmailViewer';
 import ComposeModal from '../components/ComposeModal';
+import Sidebar from '../components/Sidebar';
+import Header from '../components/Header';
 import toast from 'react-hot-toast';
 import { Plus } from 'lucide-react';
 import './InboxPage.css';
 
 const InboxPage = () => {
-  console.log('InboxPage component is rendering!');
-  
-  const { user, logout } = useAuth();
-  
-  console.log('👤 User from context:', user);
-  
+  const { user } = useAuth();
   const [emails, setEmails] = useState([]);
   const [selectedEmail, setSelectedEmail] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isComposeOpen, setIsComposeOpen] = useState(false);
   const [replyTo, setReplyTo] = useState(null);
+  const [currentFolder, setCurrentFolder] = useState('inbox');
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  // Fetch inbox on mount
+  // Fetch emails when folder changes
   useEffect(() => {
-    console.log('User in useEffect:', user);
-    
     if (user && user.userId) {
-      console.log('User exists, fetching inbox for userId:', user.userId);
-      fetchInbox();
-    } else {
-      console.error('No user or userId found:', user);
-      setLoading(false);
+      fetchEmails(currentFolder);
+      fetchUnreadCount();
     }
-  }, [user]);
+  }, [currentFolder, user]);
 
-  const fetchInbox = async () => {
-    console.log('fetchInbox called');
+  const fetchEmails = async (folder) => {
     try {
       setLoading(true);
-      console.log('Making API call to getInbox...');
-      
-      const response = await mailService.getInbox(user.userId);
-      
-      console.log('API Response received:', response);
-      console.log('Response.data:', response.data);
-      console.log('Type of response.data:', typeof response.data);
-      console.log('Is Array?:', Array.isArray(response.data));
-      
-      if (response.data && Array.isArray(response.data)) {
-        console.log('Setting emails, count:', response.data.length);
-        setEmails(response.data);
-        console.log('setEmails called with:', response.data);
-      } else {
-        console.warn('Response data is not an array:', response.data);
-        setEmails([]);
+      let response;
+
+      switch (folder) {
+        case 'inbox':
+          response = await mailService.getInbox(user.userId);
+          break;
+        case 'sent':
+          response = await mailService.getSentMails(user.userId);
+          break;
+        case 'trash':
+          response = await mailService.getTrash(user.userId);
+          break;
+        case 'starred':
+          // Filter starred from inbox for now
+          response = await mailService.getInbox(user.userId);
+          response.data = response.data.filter(email => email.isStarred);
+          break;
+        default:
+          response = await mailService.getInbox(user.userId);
       }
+
+      setEmails(response.data || []);
     } catch (error) {
-      console.error('Error in fetchInbox:', error);
-      console.error('Error response:', error.response);
-      toast.error('Failed to load inbox');
+      toast.error(`Failed to load ${folder}`);
+      console.error(error);
       setEmails([]);
     } finally {
       setLoading(false);
-      console.log('Loading set to false');
     }
   };
 
+  const fetchUnreadCount = async () => {
+    try {
+      const response = await mailService.getUnreadCount(user.userId);
+      setUnreadCount(response.data || 0);
+    } catch (error) {
+      console.error('Failed to fetch unread count:', error);
+    }
+  };
+
+  const handleFolderChange = (folder) => {
+    setCurrentFolder(folder);
+    setSelectedEmail(null);
+  };
+
   const handleSelectEmail = async (email) => {
-    console.log('Email selected:', email);
     setSelectedEmail(email);
     
-    if (!email.isRead) {
+    if (!email.isRead && currentFolder === 'inbox') {
       try {
         await mailService.markAsRead(email.mailId, user.userId);
         setEmails(emails.map(e => 
           e.mailId === email.mailId ? { ...e, isRead: true } : e
         ));
+        fetchUnreadCount();
       } catch (error) {
         console.error('Failed to mark as read', error);
       }
@@ -105,6 +116,7 @@ const InboxPage = () => {
         setSelectedEmail(null);
       }
       toast.success('Moved to trash');
+      fetchUnreadCount();
     } catch (error) {
       toast.error('Failed to delete');
     }
@@ -126,30 +138,25 @@ const InboxPage = () => {
 
   const handleSendEmail = async (mailData) => {
     try {
-        console.log('Received from ComposeModal:', mailData);
-        console.log('  - to:', mailData.to);
-        console.log('  - subject:', mailData.subject);
-        console.log('  - body:', mailData.body);
-        
-        // Map frontend field names to backend field names
-        const payload = {
+      const payload = {
         recipientEmail: mailData.to,
         subject: mailData.subject,
-        content: mailData.body, 
-        };
-        
-        console.log('Sending to backend:', payload);
-        
-        await mailService.sendMail(user.userId, payload);
-        
-        toast.success('Email sent successfully!');
-        setIsComposeOpen(false);
-        setReplyTo(null);
-        
+        content: mailData.body,
+      };
+      
+      await mailService.sendMail(user.userId, payload);
+      
+      toast.success('Email sent successfully!');
+      setIsComposeOpen(false);
+      setReplyTo(null);
+      
+      // Refresh if in sent folder
+      if (currentFolder === 'sent') {
+        fetchEmails('sent');
+      }
     } catch (error) {
-        console.error('Send error:', error);
-        toast.error('Failed to send email');
-        throw error;
+      toast.error('Failed to send email');
+      throw error;
     }
   };
 
@@ -158,48 +165,71 @@ const InboxPage = () => {
     setReplyTo(null);
   };
 
-  console.log('🎨 About to render. Emails:', emails, 'Length:', emails.length, 'Loading:', loading);
+  const handleMenuToggle = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  const getFolderTitle = () => {
+    const titles = {
+      inbox: 'Inbox',
+      sent: 'Sent',
+      trash: 'Trash',
+      starred: 'Starred',
+    };
+    return titles[currentFolder] || 'Inbox';
+  };
 
   return (
     <div className="inbox-page">
-      <div className="inbox-header">
-        <h1>Inbox</h1>
-        <div className="inbox-header-actions">
-          <button className="compose-btn" onClick={handleCompose}>
-            <Plus size={20} />
-            Compose
-          </button>
-          <span>Welcome, {user?.username}</span>
-          <button onClick={logout} className="logout-btn">Logout</button>
-        </div>
-      </div>
+      <Header onMenuToggle={handleMenuToggle} />
 
-      
-      <div className="inbox-content">
-        <div className="email-list-container">
-          {console.log('Passing to EmailList - emails:', emails, 'loading:', loading)}
-          <EmailList
-            emails={emails}
-            onSelectEmail={handleSelectEmail}
-            onStarEmail={handleStarEmail}
-            onDeleteEmail={handleDeleteEmail}
-            loading={loading}
+      <div className="inbox-main">
+        {sidebarOpen && (
+          <Sidebar
+            currentFolder={currentFolder}
+            onFolderChange={handleFolderChange}
+            unreadCount={unreadCount}
           />
-        </div>
-
-        {selectedEmail && (
-          <div className="email-viewer-container">
-            <EmailViewer
-              email={selectedEmail}
-              onClose={handleCloseViewer}
-              onStar={handleStarEmail}
-              onDelete={handleDeleteEmail}
-              onReply={handleReply}
-            />
-          </div>
         )}
+
+        <div className="inbox-content-wrapper">
+          {/* Compose Button */}
+          <div className="content-header">
+            <h2 className="folder-title">{getFolderTitle()}</h2>
+            <button className="compose-fab" onClick={handleCompose}>
+              <Plus size={24} />
+              <span>Compose</span>
+            </button>
+          </div>
+
+          {/* Email List and Viewer */}
+          <div className="inbox-content">
+            <div className="email-list-container">
+              <EmailList
+                emails={emails}
+                onSelectEmail={handleSelectEmail}
+                onStarEmail={handleStarEmail}
+                onDeleteEmail={handleDeleteEmail}
+                loading={loading}
+              />
+            </div>
+
+            {selectedEmail && (
+              <div className="email-viewer-container">
+                <EmailViewer
+                  email={selectedEmail}
+                  onClose={handleCloseViewer}
+                  onStar={handleStarEmail}
+                  onDelete={handleDeleteEmail}
+                  onReply={handleReply}
+                />
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
+      {/* Compose Modal */}
       <ComposeModal
         isOpen={isComposeOpen}
         onClose={handleCloseCompose}
