@@ -172,7 +172,7 @@
 }
 
 .send-btn {
-  background-color: var(--accent-blue);
+  background: linear-gradient(135deg, rgb(0, 98, 255) 0%, rgb(147, 49, 186) 100%);
   color: var(--text-primary);
   box-shadow: 0 2px 8px rgba(58, 125, 255, 0.3);
 }

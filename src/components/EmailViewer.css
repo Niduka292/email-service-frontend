@@ -62,7 +62,7 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-hover));
+  background: linear-gradient(135deg, rgb(0, 98, 255) 0%, rgb(161, 49, 186) 100%);
   color: var(--text-primary);
   display: flex;
   align-items: center;

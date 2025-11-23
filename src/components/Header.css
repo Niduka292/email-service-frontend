@@ -40,9 +40,13 @@
 }
 
 .logo-text {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 600;
-  color: var(--text-primary);
+  background: linear-gradient(135deg, rgb(0, 98, 255) 0%, rgb(178, 81, 197) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
 }
 
 .header-search {
@@ -124,7 +128,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-blue), var(--accent-blue-hover));
+  background: linear-gradient(135deg, rgb(0, 98, 255) 0%, rgb(111, 83, 193) 100%);
   color: var(--text-primary);
   display: flex;
   align-items: center;

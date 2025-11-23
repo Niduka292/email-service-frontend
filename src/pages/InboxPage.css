@@ -40,7 +40,7 @@
   align-items: center;
   gap: 8px;
   padding: 12px 24px;
-  background-color: var(--accent-blue);
+  background: linear-gradient(135deg, rgb(0, 98, 255) 0%, rgb(138, 38, 171) 100%);
   color: var(--text-primary);
   border: none;
   border-radius: 8px;

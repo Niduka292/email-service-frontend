@@ -51,7 +51,7 @@
 }
 
 .sidebar-badge {
-  background-color: var(--accent-blue);
+  background: linear-gradient(135deg, rgb(0, 98, 255) 0%, rgb(110, 46, 143) 100%);
   color: var(--text-primary);
   font-size: 11px;
   font-weight: 600;

@@ -138,10 +138,11 @@ const SignupPage = () => {
                 style={{ 
                     width: '100%', 
                     padding: '10px', 
-                    background: '#28a745', 
+                    background: 'linear-gradient(135deg, rgba(0, 159, 29, 1) 0%, rgba(3, 155, 51, 0.76) 100%)', 
                     color: 'white', 
                     border: 'none',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    borderRadius: '5px'
                 }}
                 >
                 {loading ? 'Signing up...' : 'Sign Up'}

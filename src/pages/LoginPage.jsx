@@ -96,10 +96,13 @@ const LoginPage = () => {
                 style={{ 
                     width: '100%', 
                     padding: '10px', 
-                    background: '#007bff', 
+                    background: 'linear-gradient(135deg, rgb(0, 98, 255) 0%, rgb(110, 46, 143) 100%)', 
                     color: 'white', 
                     border: 'none',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
+                    borderRadius: '5px',
+                    marginTop: '15px',
+                    fontSize: '16px'
                 }}
                 >
                 {loading ? 'Logging in...' : 'Login'}
