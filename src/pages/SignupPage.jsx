@@ -49,10 +49,10 @@ const SignupPage = () => {
     };
 
     return(
-        <div style={{ maxWidth: '400px', margin: '50px auto', padding: '20px' }}>
-            <h1>Sign Up</h1>
+        <div style={{ maxWidth: '400px', margin: '5px auto', padding: '8px' }}>
+            <h1 style={{marginBottom: '15px'}}>Sign Up</h1>
             <form onSubmit={handleSubmit}>
-                <div style={{ marginBottom: '15px' }}>
+                <div style={{ marginBottom: '5px' }}>
                 <label>First Name:</label>
                 <input
                     type="text"
@@ -60,10 +60,10 @@ const SignupPage = () => {
                     value={formData.firstName}
                     onChange={handleChange}
                     required
-                    style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+                    style={{ width: '100%', padding: '8px', marginTop: '3px' }}
                 />
                 </div>
-                <div style={{ marginBottom: '15px' }}>
+                <div style={{ marginBottom: '5px' }}>
                 <label>Last Name:</label>
                 <input
                     type="text"
@@ -71,10 +71,10 @@ const SignupPage = () => {
                     value={formData.lastName}
                     onChange={handleChange}
                     required
-                    style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+                    style={{ width: '100%', padding: '8px', marginTop: '3px' }}
                 />
                 </div>
-                <div style={{ marginBottom: '15px' }}>
+                <div style={{ marginBottom: '5px' }}>
                 <label>Email:</label>
                 <input
                     type="email"
@@ -82,10 +82,10 @@ const SignupPage = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+                    style={{ width: '100%', padding: '8px', marginTop: '3px' }}
                 />
                 </div>
-                <div style={{ marginBottom: '15px' }}>
+                <div style={{ marginBottom: '5px' }}>
                 <label>Username:</label>
                 <input
                     type="text"
@@ -93,10 +93,10 @@ const SignupPage = () => {
                     value={formData.username}
                     onChange={handleChange}
                     required
-                    style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+                    style={{ width: '100%', padding: '8px', marginTop: '3px' }}
                 />
                 </div>
-                <div style={{ marginBottom: '15px' }}>
+                <div style={{ marginBottom: '5px' }}>
                 <label>Password:</label>
                 <input
                     type="password"
@@ -105,10 +105,10 @@ const SignupPage = () => {
                     onChange={handleChange}
                     required
                     minLength="6"
-                    style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+                    style={{ width: '100%', padding: '8px', marginTop: '3px' }}
                 />
                 </div>
-                <div style={{ marginBottom: '15px' }}>
+                <div style={{ marginBottom: '5px' }}>
                 <label>Confirm Password:</label>
                 <input
                     type="password"
@@ -116,16 +116,16 @@ const SignupPage = () => {
                     value={formData.confirmPassword}
                     onChange={handleChange}
                     required
-                    style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+                    style={{ width: '100%', padding: '8px', marginTop: '3px' }}
                 />
                 </div>
-                <div style={{ marginBottom: '15px' }}>
+                <div style={{ marginBottom: '25px' }}>
                 <label>Gender:</label>
                 <select
                     name="gender"
                     value={formData.gender}
                     onChange={handleChange}
-                    style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+                    style={{ width: '100%', padding: '8px', marginTop: '3px' }}
                 >
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
