@@ -214,16 +214,17 @@ const InboxPage = () => {
               />
             </div>
 
-            
-            <div className="email-viewer-container">
-                <EmailViewer
-                  email={selectedEmail}
-                  onClose={handleCloseViewer}
-                  onStar={handleStarEmail}
-                  onDelete={handleDeleteEmail}
-                  onReply={handleReply}
-                />
-            </div>
+            {selectedEmail && (
+                <div className="email-viewer-container">
+                    <EmailViewer
+                    email={selectedEmail}
+                    onClose={handleCloseViewer}
+                    onStar={handleStarEmail}
+                    onDelete={handleDeleteEmail}
+                    onReply={handleReply}
+                    />
+                </div>
+            )}
           </div>
         </div>
       </div>
