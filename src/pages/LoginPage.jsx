@@ -47,8 +47,8 @@ const LoginPage = () => {
     };
 
     return(
-        <div style={{ maxWidth: '400px', margin: '100px auto', padding: '20px' }}>
-            <h1>Login</h1>
+        <div style={{ maxWidth: '400px', margin: '120px auto', padding: '20px'}}>
+            <h1 style={{marginBottom: '20px', fontSize: '50px'}}>Login</h1>
             <form onSubmit={handleSubmit}>
                 <div style={{ marginBottom: '15px' }}>
                 <label>Username:</label>
