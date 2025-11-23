@@ -20,6 +20,8 @@ const InboxPage = () => {
   const [currentFolder, setCurrentFolder] = useState('inbox');
   const [unreadCount, setUnreadCount] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [filteredEmails, setFilteredEmails] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
 
   // Fetch emails when folder changes
   useEffect(() => {
@@ -28,6 +30,28 @@ const InboxPage = () => {
       fetchUnreadCount();
     }
   }, [currentFolder, user]);
+
+  // Filter emails when searchQuery changes
+  useEffect(()=> {
+    if(searchQuery.trim() === ''){
+        setFilteredEmails(emails);
+    }else{
+        const query = searchQuery.toLowerCase();
+        const filtered = emails.filter(email => {
+            const subject = (email.subject || '').toLowerCase();
+            const body = (email.content || email.body || '').toLowerCase();
+            const senderName = (email.senderName || '').toLowerCase();
+            const senderEmail = (email.senderEmail || '').toLowerCase(); 
+
+
+            return subject.includes(query) ||
+            body.includes(query) ||
+            senderName.includes(query) ||
+            senderEmail.includes(query);
+        });
+        setFilteredEmails(filtered);
+    }
+  }, [searchQuery,emails]);
 
   const fetchEmails = async (folder) => {
     try {
@@ -54,10 +78,12 @@ const InboxPage = () => {
       }
 
       setEmails(response.data || []);
+      setFilteredEmails(response.data || []);
     } catch (error) {
       toast.error(`Failed to load ${folder}`);
       console.error(error);
       setEmails([]);
+      setFilteredEmails([]);
     } finally {
       setLoading(false);
     }
@@ -75,6 +101,7 @@ const InboxPage = () => {
   const handleFolderChange = (folder) => {
     setCurrentFolder(folder);
     setSelectedEmail(null);
+    setSearchQuery('');
   };
 
   const handleSelectEmail = async (email) => {
@@ -179,9 +206,16 @@ const InboxPage = () => {
     return titles[currentFolder] || 'Inbox';
   };
 
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+  };
+
   return (
     <div className="inbox-page">
-      <Header onMenuToggle={handleMenuToggle} />
+      <Header onMenuToggle={handleMenuToggle} 
+            onSearch={handleSearch}
+            searchQuery={searchQuery}
+        />
 
       <div className="inbox-main">
         {sidebarOpen && (
@@ -206,7 +240,7 @@ const InboxPage = () => {
           <div className="inbox-content">
             <div className="email-list-container">
               <EmailList
-                emails={emails}
+                emails={filteredEmails}
                 onSelectEmail={handleSelectEmail}
                 onStarEmail={handleStarEmail}
                 onDeleteEmail={handleDeleteEmail}
