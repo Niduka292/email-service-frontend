@@ -214,8 +214,8 @@ const InboxPage = () => {
               />
             </div>
 
-            {selectedEmail && (
-              <div className="email-viewer-container">
+            
+            <div className="email-viewer-container">
                 <EmailViewer
                   email={selectedEmail}
                   onClose={handleCloseViewer}
@@ -223,8 +223,7 @@ const InboxPage = () => {
                   onDelete={handleDeleteEmail}
                   onReply={handleReply}
                 />
-              </div>
-            )}
+            </div>
           </div>
         </div>
       </div>
