@@ -1,9 +1,23 @@
+import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import './Header.css';
-import { Menu, Search, LogOut } from 'lucide-react';
+import { Menu, Search, LogOut, X } from 'lucide-react';
 
-const Header = ({onMenuToggle}) => {
+const Header = ({onMenuToggle, onSearch, searchQuery}) => {
     const {user, logout} = useAuth();
+    const [localSearch, setLocalSearch] = useState(searchQuery || '');
+    const [isSearchFocused, setIsSearchFocused] = useState(false);
+
+    const handleSearchChange = (e) => {
+        const value = e.target.value;
+        setLocalSearch(value);
+        onSearch(value);
+    };
+
+    const handleClearSearch = () => {
+        setLocalSearch('');
+        onSearch('');
+    }
 
     return(
         <div className="header">
@@ -16,13 +30,22 @@ const Header = ({onMenuToggle}) => {
                 </div>
             </div>
 
-            <div className="header-search">
+            <div className={`header-search ${isSearchFocused ? 'focused' : ''}`}>
                 <Search size={20} />
                 <input
                 type="text"
                 placeholder="Search mail"
                 className="search-input"
+                value={localSearch}
+                onChange={handleSearchChange}
+                onFocus={() => setIsSearchFocused(true)}
+                onBlur={() => setIsSearchFocused(false)}
                 />
+                {localSearch && (
+                <button className="clear-search-btn" onClick={handleClearSearch}>
+                    <X size={18} />
+                </button>
+                )}
             </div>
 
             <div className="header-right">
