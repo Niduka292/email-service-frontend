@@ -27,7 +27,7 @@ const EmailList = ({emails, onSelectEmail, onStarEmail, onDeleteEmail, loading})
     }
 
     return(
-        <div className="email-list" style={{ cursor: 'pointer' }}>
+        <div className="email-list">
         {emails.map((email) => (
             <EmailItem
             key={email.mailId}
