@@ -48,7 +48,7 @@ api.interceptors.response.use(
       console.error('401 Unauthorized - clearing auth and redirecting');
       localStorage.removeItem('token');
       localStorage.removeItem('user');
-      window.location.href = '/login';
+      window.location.href = '/';
     }
     
     if (error.response?.status === 403) {
