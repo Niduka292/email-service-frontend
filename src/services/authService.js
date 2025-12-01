@@ -1,7 +1,4 @@
 import api from './api';
-import { useNavigate } from 'react-router-dom';
-
-const navigate = useNavigate();
 
 const authService = {
 
@@ -39,7 +36,7 @@ const authService = {
     logout: () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        navigate('/login');
+        window.location.href = `${window.location.origin}/login`;
     },
 
     // Get current user from local storage
