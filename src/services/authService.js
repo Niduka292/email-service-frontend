@@ -36,7 +36,7 @@ const authService = {
     logout: () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        window.location.href = '/login';
+        window.location.href = `${window.location.origin}/login`;
     },
 
     // Get current user from local storage
