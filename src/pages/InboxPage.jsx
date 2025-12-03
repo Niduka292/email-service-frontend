@@ -9,6 +9,7 @@ import Header from '../components/Header';
 import toast from 'react-hot-toast';
 import { Plus } from 'lucide-react';
 import './InboxPage.css';
+import KeyboardShortcuts from '../components/KeyboardShortcuts';
 
 const InboxPage = () => {
   const { user } = useAuth();
@@ -32,26 +33,26 @@ const InboxPage = () => {
   }, [currentFolder, user]);
 
   // Filter emails when searchQuery changes
-  useEffect(()=> {
-    if(searchQuery.trim() === ''){
-        setFilteredEmails(emails);
+  useEffect(() => {
+    if((searchQuery || '').trim() === ''){
+      setFilteredEmails(emails);
     }else{
-        const query = searchQuery.toLowerCase();
-        const filtered = emails.filter(email => {
-            const subject = (email.subject || '').toLowerCase();
-            const body = (email.content || email.body || '').toLowerCase();
-            const senderName = (email.senderName || '').toLowerCase();
-            const senderEmail = (email.senderEmail || '').toLowerCase(); 
+      const query = searchQuery.toLowerCase();
+      const filtered = emails.filter(email => {
+        const subject = (email.subject || '').toLowerCase();
+        const body = (email.content || email.body || '').toLowerCase();
+        const senderName = (email.senderName || '').toLowerCase();
+        const senderEmail = (email.senderEmail || '').toLowerCase();
 
 
-            return subject.includes(query) ||
-            body.includes(query) ||
-            senderName.includes(query) ||
-            senderEmail.includes(query);
-        });
-        setFilteredEmails(filtered);
+        return subject.includes(query) ||
+          body.includes(query) ||
+          senderName.includes(query) ||
+          senderEmail.includes(query);
+      });
+      setFilteredEmails(filtered);
     }
-  }, [searchQuery,emails]);
+  }, [searchQuery, emails]);
 
   const fetchEmails = async (folder) => {
     try {
@@ -106,7 +107,7 @@ const InboxPage = () => {
 
   const handleSelectEmail = async (email) => {
     setSelectedEmail(email);
-    
+
     if (!email.isRead && currentFolder === 'inbox') {
       try {
         await mailService.markAsRead(email.mailId, user.userId);
@@ -170,13 +171,13 @@ const InboxPage = () => {
         subject: mailData.subject,
         content: mailData.body,
       };
-      
+
       await mailService.sendMail(user.userId, payload);
-      
+
       toast.success('Email sent successfully!');
       setIsComposeOpen(false);
       setReplyTo(null);
-      
+
       // Refresh if in sent folder
       if (currentFolder === 'sent') {
         fetchEmails('sent');
@@ -210,12 +211,28 @@ const InboxPage = () => {
     setSearchQuery(query);
   };
 
+  const handleFocusSearch = () => {
+    const searchInput = document.querySelector('.search-input');
+    if (searchInput) {
+      searchInput.focus();
+    }
+  };
+
   return (
     <div className="inbox-page">
-      <Header onMenuToggle={handleMenuToggle} 
-            onSearch={handleSearch}
-            searchQuery={searchQuery}
-        />
+      <Header onMenuToggle={handleMenuToggle}
+        onSearch={handleSearch}
+        searchQuery={searchQuery}
+      />
+
+      <KeyboardShortcuts
+        onCompose={handleCompose}
+        onReply={handleReply}
+        onDelete={handleDeleteEmail}
+        onSearch={handleFocusSearch}
+        onStar={handleStarEmail}
+        selectedMail={selectedEmail}
+      />
 
       <div className="inbox-main">
         {sidebarOpen && (
@@ -249,15 +266,15 @@ const InboxPage = () => {
             </div>
 
             {selectedEmail && (
-                <div className="email-viewer-container">
-                    <EmailViewer
-                    email={selectedEmail}
-                    onClose={handleCloseViewer}
-                    onStar={handleStarEmail}
-                    onDelete={handleDeleteEmail}
-                    onReply={handleReply}
-                    />
-                </div>
+              <div className="email-viewer-container">
+                <EmailViewer
+                  email={selectedEmail}
+                  onClose={handleCloseViewer}
+                  onStar={handleStarEmail}
+                  onDelete={handleDeleteEmail}
+                  onReply={handleReply}
+                />
+              </div>
             )}
           </div>
         </div>
