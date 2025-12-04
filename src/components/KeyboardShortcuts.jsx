@@ -7,6 +7,7 @@ const KeyboardShortcuts = ({
     onSearch,
     onStar,
     selectedMail,
+    onShowHelp
 }) =>{
 
     useEffect(() => {
@@ -47,7 +48,8 @@ const KeyboardShortcuts = ({
                     }
                     break;
                 case '?':
-                    alert(`
+                    
+                    /*alert(`
                         Keyboard Shortcuts:
 ━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -57,7 +59,8 @@ D - Delete email
 / - Focus search
 * - Star/ Unstar email
 ? - Show this help
-                        `);
+                        `);*/
+                    onShowHelp && onShowHelp();
                     break;
                 default:
                     break;
@@ -70,7 +73,7 @@ D - Delete email
         return () => {
             window.removeEventListener('keydown', handleKeypress);
         };
-    }, [onCompose, onDelete, onReply, onSearch, onStar, selectedMail]);
+    }, [onCompose, onDelete, onReply, onSearch, onStar, selectedMail,onShowHelp]);
 
     return null;
 }
