@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 import { Plus } from 'lucide-react';
 import './InboxPage.css';
 import KeyboardShortcuts from '../components/KeyboardShortcuts';
+import ShortcutsHelp from '../components/ShortcutsHelp';
 
 const InboxPage = () => {
   const { user } = useAuth();
@@ -23,6 +24,7 @@ const InboxPage = () => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [filteredEmails, setFilteredEmails] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
 
   // Fetch emails when folder changes
   useEffect(() => {
@@ -232,6 +234,7 @@ const InboxPage = () => {
         onSearch={handleFocusSearch}
         onStar={handleStarEmail}
         selectedMail={selectedEmail}
+        onShowHelp={() => setShowShortcutsHelp(true)}
       />
 
       <div className="inbox-main">
@@ -286,6 +289,10 @@ const InboxPage = () => {
         onClose={handleCloseCompose}
         onSend={handleSendEmail}
         replyTo={replyTo}
+      />
+      <ShortcutsHelp
+        isOpen={showShortcutsHelp}
+        onClose={() => setShowShortcutsHelp(false)}
       />
     </div>
   );
