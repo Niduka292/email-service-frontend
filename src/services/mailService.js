@@ -82,6 +82,17 @@ const mailService = {
         }
     },
 
+    // Get summary
+    getSummary: async (mailId) => {
+        try{
+            const response = await api.get(`/mails/${mailId}/summary`);
+            return response.data;
+        }catch(error){
+            const errMsg = error.response?.data || "Could not connect to summarization service.";
+            throw new Error(errMsg);
+        }
+    }
+
 };
 
 export default mailService;
