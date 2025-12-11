@@ -2,7 +2,7 @@ import { X, Star, Trash2, Reply } from 'lucide-react';
 import { format } from 'date-fns';
 import './EmailViewer.css';
 
-const EmailViewer = ({ email, onClose, onStar, onDelete, onReply }) => {
+const EmailViewer = ({ email, onClose, onStar, onDelete, onReply, summary, summaryLoading }) => {
   if (!email) return null;
 
   const formatFullDate = (dateString) => {
@@ -14,16 +14,16 @@ const EmailViewer = ({ email, onClose, onStar, onDelete, onReply }) => {
   };
 
   // Get sender info - handle both formats
-  const senderName = email.senderName || 
+  const senderName = email.senderName ||
     (email.sender ? `${email.sender.firstName} ${email.sender.lastName}` : 'Unknown');
-  
+
   const senderEmail = email.senderEmail || email.sender?.email || '';
-  
+
   // Get sender initials for avatar
   const getInitials = () => {
     if (email.senderName) {
       const parts = email.senderName.split(' ');
-      return parts.length >= 2 
+      return parts.length >= 2
         ? parts[0].charAt(0) + parts[parts.length - 1].charAt(0)
         : parts[0].charAt(0);
     }
@@ -84,6 +84,24 @@ const EmailViewer = ({ email, onClose, onStar, onDelete, onReply }) => {
           <span className="recipients-list">
             {email.recipients.map(r => `${r.firstName} ${r.lastName}`).join(', ')}
           </span>
+        </div>
+      )}
+
+      {/* AI Summary Display*/}
+      {(summaryLoading || summary) && (
+        <div className="ai-summary-box">
+          {summaryLoading ? (
+            <p className="loading-text">Generating AI Summary...</p>
+          ) : (
+            <>
+              <p className="summary-label">
+                🧠AI Summary:
+              </p>
+              <div className="summary-content">
+                {summary}
+              </div>
+            </>
+          )}
         </div>
       )}
 

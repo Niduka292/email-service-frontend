@@ -125,3 +125,7 @@
   border-radius: 8px;
   border: 1px solid var(--border-color);
 }
+
+.ai-summary-box{
+  margin-bottom: 15px;
+}
