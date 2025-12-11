@@ -25,6 +25,8 @@ const InboxPage = () => {
   const [filteredEmails, setFilteredEmails] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
+  const [summaryData, setSummaryData] = useState(null);
+  const [summaryDataLoading, setSummaryDataLoading] = useState(false);
 
   // Fetch emails when folder changes
   useEffect(() => {
@@ -110,16 +112,26 @@ const InboxPage = () => {
   const handleSelectEmail = async (email) => {
     setSelectedEmail(email);
 
-    if (!email.isRead && currentFolder === 'inbox') {
-      try {
-        await mailService.markAsRead(email.mailId, user.userId);
-        setEmails(emails.map(e => 
-          e.mailId === email.mailId ? { ...e, isRead: true } : e
-        ));
-        fetchUnreadCount();
-      } catch (error) {
-        console.error('Failed to mark as read', error);
+    const markAsReadPromise = (async () => {
+      if(!email.isRead && currentFolder === 'inbox'){
+        try{
+          await mailService.markAsRead(email.mailId, user.userId);
+          setEmails(emails.map(e => 
+            e.mailId === email.mailId ? { ...e, isRead: true } : e
+          ));
+          fetchUnreadCount();
+        }catch(error) {
+          console.error('Failed to mark as read', error);
+        }
       }
+    })();
+
+    const summaryPromise = fetchSummary(email.mailId);
+
+    try{
+      await Promise.all([markAsReadPromise, summaryPromise]);
+    }catch(error){
+      console.error("An issue occurred during email processing or summarization.", error);
     }
   };
 
@@ -220,6 +232,25 @@ const InboxPage = () => {
     }
   };
 
+  const fetchSummary = async (mailId) => {
+    if(!mailId){
+      return;
+    }
+
+    try{
+      setSummaryDataLoading(true);
+      setSummaryData(null); // Clear any previous summary
+
+      const summaryText = await mailService.getSummary(mailId);
+      setSummaryData(summaryText);
+    }catch(error){
+      console.error("AI summary error: ",error);
+      setSummaryData("AI summary unavailable.");
+    }finally{
+      setSummaryDataLoading(false);
+    }
+  }
+
   return (
     <div className="inbox-page">
       <Header onMenuToggle={handleMenuToggle}
@@ -276,6 +307,8 @@ const InboxPage = () => {
                   onStar={handleStarEmail}
                   onDelete={handleDeleteEmail}
                   onReply={handleReply}
+                  summary={summaryData}
+                  summaryLoading={summaryDataLoading}
                 />
               </div>
             )}
