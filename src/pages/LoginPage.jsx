@@ -54,15 +54,19 @@ const LoginPage = () => {
             alignItems: 'center',
             justifyContent: 'center',
             gap: '40px',
-            padding: '20px'
+            padding: '20px',
+            backgroundImage: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
         }}>
             <div className="login-form-container" style={{ 
                 maxWidth: '400px', 
                 width: '100%',
-                padding: '20px',
-                backgroundColor: '#171D21',
+                padding: '40px 20px',
+                backgroundColor: '#3021326b',
                 borderRadius: '12px',
-                boxShadow: '0px 0px 90px #360a57ff'
+                boxShadow: '0px 4px 90px #360a57ff',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blue(10px)',
+                border: '1px solid #58138cd3'
             }}>
                 <h1 style={{marginBottom: '20px', fontSize: '50px'}}>Login</h1>
                 <form onSubmit={handleSubmit}>
@@ -113,7 +117,7 @@ const LoginPage = () => {
                         style={{ 
                             width: '100%', 
                             padding: '10px', 
-                            background: 'linear-gradient(135deg, rgb(0, 98, 255) 0%, rgb(110, 46, 143) 100%)', 
+                            background: 'linear-gradient(135deg, rgba(51, 0, 220, 1) 0%, rgba(145, 18, 188, 1) 100%)', 
                             color: 'white', 
                             border: 'none',
                             cursor: 'pointer',
@@ -126,7 +130,7 @@ const LoginPage = () => {
                     </button>
                 </form>
                 <p style={{ marginTop: '15px', textAlign: 'center' }}>
-                    Don't have an account? <Link to="/signup">Sign up</Link>
+                    Don't have an account? <Link to="/signup" style={{color:'#0072d6ff'}}>Sign up</Link>
                 </p>
             </div>
             

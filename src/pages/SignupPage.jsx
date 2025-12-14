@@ -57,14 +57,17 @@ const SignupPage = () => {
             justifyContent: 'center',
             gap: '80px',
             padding: '20px',
+            backgroundImage: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
         }}>
             <div className="signup-form-container" style={{
                 maxWidth: '400px',
                 width: '100%',
                 padding: '20px',
-                backgroundColor: '#171D21',
+                backgroundColor: '#372a415e',
                 borderRadius: '12px',
-                boxShadow: '0px 0px 200px #360a57ff'
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blue(10px)',
+                boxShadow: '0px 0px 200px #5a2881ff'
             }}>
                 <h1 style={{ marginBottom: '15px' }}>Sign Up</h1>
                 <form onSubmit={handleSubmit}>
