@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
-import loginImage from "../assets/login-page-img.png"
+import loginImage from "../assets/login-page-img.avif"
 
 const LoginPage = () => {
     const [credentials, setCredentials] = useState({
