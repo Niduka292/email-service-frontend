@@ -132,8 +132,6 @@
 
 @media (max-width: 1024px) {
   .sender-avatar{
-    width: 40px;
-    height: 40px;
-    font-size: 12px;
+    display: none;
   }
 }
