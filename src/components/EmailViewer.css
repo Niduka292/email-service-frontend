@@ -62,7 +62,7 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: linear-gradient(135deg, rgb(0, 98, 255) 0%, rgb(161, 49, 186) 100%);
+  background: linear-gradient(135deg, #6b21ff 0%, #8a2be2 50%, #9d4edd 100%);
   color: var(--text-primary);
   display: flex;
   align-items: center;
@@ -128,4 +128,12 @@
 
 .ai-summary-box{
   margin-bottom: 15px;
+}
+
+@media (max-width: 1024px) {
+  .sender-avatar{
+    width: 40px;
+    height: 40px;
+    font-size: 12px;
+  }
 }
