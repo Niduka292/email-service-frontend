@@ -323,7 +323,8 @@ const LoginPage = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 position: 'relative',
-                zIndex: 1
+                zIndex: 1,
+                marginLeft: '80px'
             }}>
                 <div style={{
                     width: '100%',
