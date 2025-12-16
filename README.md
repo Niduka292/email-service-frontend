@@ -18,6 +18,7 @@ A modern, full-featured email client built with React. Features include email ma
 - **Starring**: Mark important emails with stars for quick access
 
 ### 🔎 Advanced Features
+- **AI Summarization**: Instantly summarize long emails using a powerful AI model (via the Spring Boot backend) to quickly grasp key content.
 - **Powerful Search**: Full-text search across subject, content, sender name, and sender email
 - **Keyboard Shortcuts**: Navigate and perform actions quickly (C for Compose, R for Reply, / for Search)
 - **Responsive Design**: Works seamlessly on desktop, tablet, and mobile
@@ -92,6 +93,19 @@ npm run preview
 # OR
 yarn preview
 ```
+🧠 AI/Gemini API Configuration
+The AI Summarization feature requires a running Spring Boot backend with the Gemini API Key configured.
+
+If running the backend locally, ensure you set the environment variable:
+
+```bash
+
+# In your backend environment (Terminal/IntelliJ Configuration)
+export GEMINI_API_KEY="YOUR_API_KEY"
+```
+
+The key is consumed by the backend property gemini.api.key=${GEMINI_API_KEY}. The frontend only communicates with the backend's summarization endpoint.
+
 
 ## 📁 Project Structure
 ```
