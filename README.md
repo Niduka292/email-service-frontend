@@ -4,7 +4,7 @@ A modern, full-featured email client built with React. Features include email ma
 
 ## 🚀 Live Demo
 
-**[https://email-service-frontend-rho.vercel.app/inbox](https://email-service-frontend-rho.vercel.app/inbox)**
+**[https://email-service-frontend-rho.vercel.app](https://email-service-frontend-rho.vercel.app/inbox)**
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-blue)](https://email-service-frontend-rho.vercel.app/inbox)
 
