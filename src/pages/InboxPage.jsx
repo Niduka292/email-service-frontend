@@ -27,7 +27,7 @@ const InboxPage = () => {
   const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
   const [summaryData, setSummaryData] = useState(null);
   const [summaryDataLoading, setSummaryDataLoading] = useState(false);
-  const [suggestions, setSuggestions] = useState(null);
+  const [suggestions, setSuggestions] = useState([]);
   const [suggestionsLoading, setSuggestionsLoading] = useState(false);
 
   // Fetch emails when folder changes
@@ -324,6 +324,8 @@ const InboxPage = () => {
                   onReply={handleReply}
                   summary={summaryData}
                   summaryLoading={summaryDataLoading}
+                  suggestions={suggestions}
+                  suggestionsLoading={suggestionsLoading}
                 />
               </div>
             )}
