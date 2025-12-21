@@ -91,6 +91,16 @@ const mailService = {
             const errMsg = error.response?.data || "Could not connect to summarization service.";
             throw new Error(errMsg);
         }
+    },
+
+    // Get reply suggestions
+    getSuggestions: async (mailId) => {
+        try{
+            const response = await api.get(`/mails/${mailId}/suggestions`);
+            return response.data;
+        }catch(error){
+            throw error.response?.data || error.message;
+        }
     }
 
 };
