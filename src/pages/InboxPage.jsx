@@ -27,6 +27,8 @@ const InboxPage = () => {
   const [showShortcutsHelp, setShowShortcutsHelp] = useState(false);
   const [summaryData, setSummaryData] = useState(null);
   const [summaryDataLoading, setSummaryDataLoading] = useState(false);
+  const [suggestions, setSuggestions] = useState(null);
+  const [suggestionsLoading, setSuggestionsLoading] = useState(false);
 
   // Fetch emails when folder changes
   useEffect(() => {
@@ -127,11 +129,12 @@ const InboxPage = () => {
     })();
 
     const summaryPromise = fetchSummary(email.mailId);
+    const suggestionsPromise = fetchSuggestions(email.mailId);
 
     try{
-      await Promise.all([markAsReadPromise, summaryPromise]);
+      await Promise.all([markAsReadPromise, summaryPromise, suggestionsPromise]);
     }catch(error){
-      console.error("An issue occurred during email processing or summarization.", error);
+      console.error("An issue occurred during email processing, summarization or AI reply generation.", error);
     }
   };
 
@@ -249,7 +252,19 @@ const InboxPage = () => {
     }finally{
       setSummaryDataLoading(false);
     }
-  }
+  };
+
+  const fetchSuggestions = async (mailId) => {
+    setSuggestionsLoading(true);
+    try{
+      const data =  await mailService.getSuggestions(mailId);
+      setSuggestions(data);
+    }catch(error){
+      setSuggestions([]);
+    }finally{
+      setSuggestionsLoading(false);
+    }
+  };
 
   return (
     <div className="inbox-page">
