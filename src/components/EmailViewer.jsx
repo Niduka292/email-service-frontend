@@ -2,7 +2,7 @@ import { X, Star, Trash2, Reply } from 'lucide-react';
 import { format } from 'date-fns';
 import './EmailViewer.css';
 
-const EmailViewer = ({ email, onClose, onStar, onDelete, onReply, summary, summaryLoading }) => {
+const EmailViewer = ({ email, onClose, onStar, onDelete, onReply, summary, summaryLoading, suggestionsLoading, suggestions }) => {
   if (!email) return null;
 
   const formatFullDate = (dateString) => {
@@ -104,6 +104,22 @@ const EmailViewer = ({ email, onClose, onStar, onDelete, onReply, summary, summa
           )}
         </div>
       )}
+
+      <div className="smart-replies-container">
+        {suggestionsLoading ? (
+          <span className="loading-dots">Finding replies...</span>
+        ) : (
+          suggestions?.map((text, index) => (
+            <button
+              key={index}
+              className="reply-chip"
+              onClick={() => onReply(email, text)} // Pass text to reply function
+            >
+              {text}
+            </button>
+          ))
+        )}
+      </div>
 
       {/* Body */}
       <div className="email-viewer-body">
