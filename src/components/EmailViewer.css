@@ -139,8 +139,8 @@
 
 /* --- AI Summary Box --- */
 .ai-summary-box {
-    background-color: #533d6c; /* Light blue/lavender tint */
-    border-left: 4px solid #9140a5; /* Brand blue accent */
+    background-color: rgba(168, 85, 247, 0.1);
+    border-left: 4px solid #a855f7; 
     padding: 16px;
     margin: 15px 20px;
     border-radius: 0 8px 8px 0;
@@ -176,7 +176,7 @@
     padding: 8px 20px;
     border: 1px solid #7852ae;
     border-radius: 20px;
-    background: linear-gradient(135deg,#9429bb 0%, #503599 100%);
+    background: linear-gradient(135deg,#9428bbd7 0%, #594297bc 100%);
     color: #d8d8d8;
     font-size: 14px;
     font-weight: 500;
@@ -186,14 +186,14 @@
 }
 
 .reply-chip:hover {
-    background-color: #f8f9fa;
-    border-color: #f421ff;
+    background: linear-gradient(135deg,#b856dcd7 0%, #7448ebbc 100%);
+    border-color: #811b9f;
     box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3);
     transform: translateY(-1px);
 }
 
 .reply-chip:active {
-    background-color: #e8eaed;
+    background: #a855f7;
     transform: translateY(0);
 }
 
@@ -204,3 +204,4 @@
     align-items: center;
     gap: 5px;
 }
+
