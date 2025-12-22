@@ -139,7 +139,8 @@
 
 /* --- AI Summary Box --- */
 .ai-summary-box {
-    background-color: rgba(168, 85, 247, 0.1);
+    background-color: rgba(168, 85, 247, 0.05);
+    border: 1px solid rgba(168, 85, 247, 0.2);
     border-left: 4px solid #a855f7; 
     padding: 16px;
     margin: 15px 20px;
@@ -174,9 +175,9 @@
 
 .reply-chip {
     padding: 8px 20px;
-    border: 1px solid #7852ae;
+    border: 1px solid #333;
     border-radius: 20px;
-    background: linear-gradient(135deg,#9428bbd7 0%, #594297bc 100%);
+    background: #272727;
     color: #d8d8d8;
     font-size: 14px;
     font-weight: 500;
@@ -204,4 +205,5 @@
     align-items: center;
     gap: 5px;
 }
+
 
