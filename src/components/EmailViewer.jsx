@@ -94,11 +94,8 @@ const EmailViewer = ({ email, onClose, onStar, onDelete, onReply, summary, summa
             <p className="loading-text">Generating AI Summary...</p>
           ) : (
             <>
-              <p className="summary-label">
-                🧠AI Summary:
-              </p>
               <div className="summary-content">
-                {summary}
+                🤖: {summary}
               </div>
             </>
           )}

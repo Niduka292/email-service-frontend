@@ -11,13 +11,13 @@
   --bg-hover: #262A30;
   --bg-active: #2D3239;
   
-  --text-primary: #F2F4F7;
-  --text-secondary: #A9B0BA;
+  --text-primary: #E5E5E5;
+  --text-secondary: #A0A0A0;
   --text-muted: #6B7280;
   
   --accent-blue: #9c3aff;
   --accent-blue-hover: #6f2aef;
-  --accent-blue-light: rgba(140, 58, 255, 0.1);
+  --accent-blue-light: #2A2D35;
   
   --border-color: #2D3239;
   --border-hover: #3D4349;
