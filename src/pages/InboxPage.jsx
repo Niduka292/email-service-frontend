@@ -176,8 +176,11 @@ const InboxPage = () => {
     setIsComposeOpen(true);
   };
 
-  const handleReply = (email) => {
-    setReplyTo(email);
+  const handleReply = (email, suggestionText = '') => {
+    setReplyTo({
+      ...email,
+      aiBody: suggestionText,
+    });
     setIsComposeOpen(true);
   };
 

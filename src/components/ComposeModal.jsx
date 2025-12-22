@@ -25,7 +25,7 @@ const ComposeModal = ({ isOpen, onClose, onSend, replyTo = null }) => {
         setFormData({
           to: replyTo.senderEmail || replyTo.sender?.email || '',
           subject: `Re: ${replyTo.subject || ''}`,
-          body: `\n\n--- Original Message ---\nFrom: ${senderName}\nDate: ${new Date(replyTo.sentAt).toLocaleString()}\n\n${originalBody}`,
+          body: replyTo.aiBody || '',
         });
       } else {
         console.log('Setting empty form data');
