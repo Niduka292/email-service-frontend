@@ -63,17 +63,6 @@ const LoginPage = () => {
             {/* Ambient glow effects */}
             <div style={{
                 position: 'absolute',
-                width: '600px',
-                height: '600px',
-                borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(138, 43, 226, 0.15) 0%, transparent 70%)',
-                top: '-250px',
-                right: '-200px',
-                filter: 'blur(80px)',
-                pointerEvents: 'none'
-            }} />
-            <div style={{
-                position: 'absolute',
                 width: '500px',
                 height: '500px',
                 borderRadius: '50%',
@@ -88,11 +77,11 @@ const LoginPage = () => {
                 maxWidth: '440px', 
                 width: '100%',
                 padding: '50px 45px',
-                background: 'rgba(45, 27, 78, 0.6)',
+                background: 'rgba(40, 29, 67, 0.7)',
                 borderRadius: '24px',
                 boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(138, 43, 226, 0.2)',
                 backdropFilter: 'blur(20px)',
-                WebkitBackdropFilter: 'blur(20px)',
+                WebkitBackdropFilter: 'blur(10px)',
                 position: 'relative',
                 zIndex: 1,
                 border: '1px solid rgba(138, 43, 226, 0.15)'
@@ -161,7 +150,7 @@ const LoginPage = () => {
                                 width: '100%',
                                 padding: '14px 18px',
                                 border: focusedInput === 'username' 
-                                    ? '2px solid #8a2be2' 
+                                    ? '2px solid #A78BFA' 
                                     : '2px solid rgba(138, 43, 226, 0.3)',
                                 borderRadius: '12px',
                                 fontSize: '15px',
@@ -296,7 +285,7 @@ const LoginPage = () => {
                     <p style={{ margin: 0, fontSize: '15px', color: '#c4b5d9' }}>
                         Don't have an account?{' '}
                         <Link to="/signup" style={{
-                            color: '#9d4edd',
+                            color: '#A78BFA',
                             textDecoration: 'none',
                             fontWeight: '600',
                             transition: 'all 0.3s ease'
